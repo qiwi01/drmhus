@@ -6,6 +6,9 @@ import { CartProvider, useCart } from "./context/CartContext";
 import { money } from "./utils/formatters";
 import products from "./data/products";
 import Checkout from "./pages/Checkout";
+import AdminProducts from "./pages/AdminProducts";
+import AdminOrders from "./pages/AdminOrders";
+import PaymentCallback from "./pages/PaymentCallback";
 import "./App.css";
 
 function App() {
@@ -14,6 +17,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="*" element={<MainApp />} />
         </Routes>
       </Router>
