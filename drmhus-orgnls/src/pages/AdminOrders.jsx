@@ -3,8 +3,6 @@ import { ArrowLeft, Package, CreditCard, RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { money } from "../utils/formatters";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
 const STATUS_ORDER = [
   "pending",
   "paid",
@@ -28,8 +26,8 @@ export default function AdminOrders() {
   const fetchOrders = async () => {
     try {
       const url = filter === "all"
-        ? `${API}/api/admin/orders`
-        : `${API}/api/admin/orders?status=${filter}`;
+        ? "/api/admin/orders"
+        : `/api/admin/orders?status=${filter}`;
       const res = await fetch(url);
       const data = await res.json();
       setOrders(data);
@@ -43,7 +41,7 @@ export default function AdminOrders() {
   const updateStatus = async (id, status) => {
     setSubmittingId(id);
     try {
-      const res = await fetch(`${API}/api/admin/orders/${id}/status`, {
+      const res = await fetch(`/api/admin/orders/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),

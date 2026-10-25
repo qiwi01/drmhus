@@ -3,8 +3,6 @@ import { Plus, Trash2, Upload, Edit3, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { money } from "../utils/formatters";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
 export default function AdminProducts() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -37,7 +35,7 @@ export default function AdminProducts() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${API}/api/admin/products`);
+      const res = await fetch("/api/admin/products");
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -92,8 +90,8 @@ export default function AdminProducts() {
 
     try {
       const url = editing
-        ? `${API}/api/admin/products/${editing}`
-        : `${API}/api/admin/products`;
+        ? `/api/admin/products/${editing}`
+        : `/api/admin/products`;
       const method = editing ? "PUT" : "POST";
       const res = await fetch(url, { method, body: formData });
 
@@ -132,7 +130,7 @@ export default function AdminProducts() {
   const deleteProduct = async (id) => {
     if (!confirm("Delete this product?")) return;
     try {
-      const res = await fetch(`${API}/api/admin/products/${id}`, {
+      const res = await fetch(`/api/admin/products/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete product.");
@@ -145,7 +143,7 @@ export default function AdminProducts() {
   const toggleActive = async (product) => {
     try {
       const res = await fetch(
-        `${API}/api/admin/products/${product._id}`,
+        `/api/admin/products/${product._id}`,
         {
           method: "PUT",
           body: JSON.stringify({ isActive: !product.isActive }),
@@ -363,7 +361,7 @@ export default function AdminProducts() {
               <div className="product-row" key={product._id}>
                 <div className="product-row-image">
                   {product.image ? (
-                    <img src={`${API}${product.image}`} alt={product.name} />
+                    <img src={product.image} alt={product.name} />
                   ) : (
                     <div className="no-image">No image</div>
                   )}
